@@ -9,31 +9,23 @@
       update_cache: yes
     when: ansible_distribution in ["Debian", "Ubuntu"]
 
-  - name: install apache2 package
+  - name: install apache2 and php packages for Debian
     apt:
-      name: apache2
+      name:
+        - apache2
+        - libapache2-mod-php
       state: latest
-    when: ansible_distribution_major_version == "12" and ansible_distribution_release == "bookworm"
-
-  - name: add php support for apache
-    apt:
-      name: libapache2-mod-php
-      state: latest
-    when: ansible_distribution == "Debian"
+    when: ansible_distribution == "Debian" and ansible_distribution_release == "bookworm"
 
   - name: update repository index
     dnf:
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
-  - name: install apache2 package
+  - name: install apache and php packages for CentOS
     dnf:
-      name: httpd 
-      state: latest
-    when: ansible_distribution == "CentOS"
-
-  - name: add php support for apache
-    dnf:
-      name: php 
+      name: 
+        - httpd
+        - php
       state: latest
     when: ansible_distribution == "CentOS"
