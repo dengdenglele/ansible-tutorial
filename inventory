@@ -1,4 +1,4 @@
 192.168.8.111 apache_package=apache2 php_package=libapache2-mod-php
 192.168.8.112 apache_package=apache2 php_package=libapache2-mod-php
 192.168.8.113 apache_package=apache2 php_package=libapache2-mod-php
-192.168.8.150 apache_package=httpd php_package=php
+192.168.8.121 apache_package=httpd php_package=php
