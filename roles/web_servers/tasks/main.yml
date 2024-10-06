@@ -1,28 +1,17 @@
-- name: install apache2 package (Debian)
-  tags: apache,apache2,debian
-  apt:
+- name: install apache and php packages
+  tags: apache,httpd,php
+  package:
     name:
-      - apache2
-      - libapache2-mod-php
+      - "{{ apachge_package_name }}"
+      - "{{ php_package_name }}"
     state: latest
-  when: ansible_distribution == "Debian"
 
-- name: install httpd package (Rocky) 
-  tags: apache,rocky,httpd
-  dnf:
-    name:
-      - httpd
-      - php
-    state: latest
-  when: ansible_distribution == "Rocky"
-
-- name: start and enable httpd (Rocky)
-  tags: apache,rocky,httpd
+- name: start and enable apache service
+  tags: apache,httpd
   service:
-    name: httpd
+    name: "{{ apache_service }}
     state: started
     enabled: yes
-  when: ansible_distribution == "Rocky"
 
 - name: change e-mail address for admin
   tags: apache,rocky,httpd
@@ -31,14 +20,14 @@
     regexp: '^ServerAdmin'
     line: ServerAdmin somebody@somewhere.net
   when: ansible_distribution == "Rocky"
-  register: httpd
+  register: apache.changed
 
-- name: restart httpd (Rocky)
-  tags: apache,rocky,httpd
+- name: restart httpd
+  tags: apache,httpd
   service:
-    name: httpd
+    name: "{{ apache_service }}"
     state: restarted
-  when: httpd.changed
+  when: apache.changed
 
 - name: copy html file for site
   tags: apache,apache2,httpd
