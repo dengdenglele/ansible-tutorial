@@ -9,7 +9,7 @@
 - name: start and enable apache service
   tags: apache,httpd
   service:
-    name: "{{ apache_service }}
+    name: "{{ apache_service }}"
     state: started
     enabled: yes
 
@@ -20,7 +20,7 @@
     regexp: '^ServerAdmin'
     line: ServerAdmin somebody@somewhere.net
   when: ansible_distribution == "Rocky"
-  register: apache.changed
+  register: apache
 
 - name: restart httpd
   tags: apache,httpd
